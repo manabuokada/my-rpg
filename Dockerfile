@@ -2,18 +2,21 @@ FROM denoland/deno:alpine
 
 WORKDIR /app
 
-# ファイルをコピー
-COPY --chown=deno:deno . .
+# 1. まず全ファイルをコピー（この時点では root 権限）
+COPY . .
 
-# セキュリティ: 非Rootユーザーへ
+# 2. root 権限があるうちに、問題のロックファイルを削除
+RUN rm -f deno.lock
+
+# 3. ファイルの所有権を deno ユーザーに変更
+RUN chown -R deno:deno /app
+
+# 4. 非Rootユーザーに切り替え
 USER deno
 
-# 【重要】既存のロックファイルを削除して、エラーを回避する
-# その後、クリーンな状態でインストールを実行
-RUN rm -f deno.lock && deno install
+# 5. インストール実行（ここで新しい lockfile が生成される）
+RUN deno install
 
-# ポート開放
 EXPOSE 8000
 
-# 実行権限の制限
 CMD ["run", "--allow-net", "--allow-env", "packages/server/src/main.ts"]
