@@ -12,7 +12,7 @@ COPY --chown=deno:deno . .
 USER deno
 
 # 依存関係のインストール（Deno 2.0の標準的な解決）
-RUN deno install
+RUN deno install --frozen=false
 
 # Renderの環境変数 $PORT を使うためのポート開放（内部ドキュメント用）
 EXPOSE 8000
