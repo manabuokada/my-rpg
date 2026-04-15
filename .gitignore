@@ -1,0 +1,5 @@
+node_modules/
+.wasm/
+dist/
+.env
+.mise.toml.local

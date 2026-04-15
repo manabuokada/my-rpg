@@ -1,0 +1,10 @@
+{
+  "workspace": [
+    "./packages/server",
+    "./packages/common"
+  ],
+  "imports": {
+    "hono": "npm:hono",
+    "@rpg/common": "./packages/common/src/index.ts"
+  }
+}
