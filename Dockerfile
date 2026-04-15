@@ -1,5 +1,5 @@
 # バージョンを固定して再現性を確保
-FROM denoland/deno:alpine-2.1.4
+FROM denoland/deno:alpine-2.1.9
 
 # 作業ディレクトリの作成
 WORKDIR /app
