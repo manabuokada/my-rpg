@@ -17,7 +17,14 @@ const nameInput = document.querySelector<HTMLInputElement>('#nameInput')!
 const joinBtn = document.querySelector<HTMLButtonElement>('#joinBtn')!
 
 // WebSocketの接続（Denoサーバーのポートは8000）
-const ws = new WebSocket('ws://localhost:8000/ws')
+// import.meta.env から読み込む
+const WS_URL = import.meta.env.VITE_WS_URL;
+
+if (!WS_URL) {
+  throw new Error("VITE_WS_URL is not defined");
+}
+
+const ws = new WebSocket(WS_URL);
 
 ws.onopen = () => {
   addLog('サーバーに接続しました')
